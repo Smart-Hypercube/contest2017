@@ -1,6 +1,7 @@
 FROM python:3
 
 EXPOSE 80
+VOLUME /usr/src/app/static
 
 WORKDIR /usr/src/app
 

@@ -11,7 +11,9 @@ import bs4
 
 
 def query(request):
-    return render(request, 'contest/query.html', {'contests': Contest.objects.all()})
+    context = {'paid': request.GET.get('paid', False),
+               'contests': Contest.objects.all()}
+    return render(request, 'contest/query.html', context)
 
 
 def get_number(s):

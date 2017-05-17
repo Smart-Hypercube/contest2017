@@ -11,7 +11,11 @@
         <table>
             <tr><td>选手1</td><td>选手2</td></tr>
             {% for participate in contest.participate_set.all %}
-                <tr><td>{{ participate.contestant1 }}</td><td>{{ participate.contestant2 }}</td></tr>
+                <tr>
+                    <td>{{ participate.contestant1 }}</td>
+                    <td>{{ participate.contestant2 }}</td>
+                    {% if paid %}<td>{% if participate.paid %}已缴费{% endif %}</td>{% endif %}
+                </tr>
             {% endfor %}
         </table>
     {% endfor %}
