@@ -1,0 +1,7 @@
+{% extends "contest/reply.xml" %}
+
+{% block content %}{% block content-body %}当前场上选手：
+{% for participate in current.participate_set.all %}{{ participate.contestants }}
+{% endfor %}{% endblock %}
+{% block status %}当前场次：{{ current }}
+下一场次：{{ current.next }}{% endblock %}{% endblock %}

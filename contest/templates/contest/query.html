@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <title>报名信息 - 中国科大第七届合肥高校国标舞邀请赛</title>
+</head>
+<body>
+    <h1>中国科大第七届合肥高校国标舞邀请赛报名信息</h1>
+    {% for contest in contests %}
+        <h2>{{ contest }}</h2>
+        <table>
+            <tr><td>选手1</td><td>选手2</td></tr>
+            {% for participate in contest.participate_set.all %}
+                <tr><td>{{ participate.contestant1 }}</td><td>{{ participate.contestant2 }}</td></tr>
+            {% endfor %}
+        </table>
+    {% endfor %}
+</body>
+</html>

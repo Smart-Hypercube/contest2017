@@ -1,0 +1,4 @@
+{% extends "contest/base.xml" %}
+
+{% block content-body %}{% if result %}投票成功
+发送“0”可以查询当前场次信息。{% else %}{% if reason == 0 %}请先发送入场券上的6位数字。{% elif reason == 1 %}输入错误，请再次核对您的入场券。{% elif reason == 2 %}每张入场券只能使用一次，请重新领取。{% endif %}{% endif %}{% endblock %}
