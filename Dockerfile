@@ -9,4 +9,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-CMD ["python", "manage.py", "runserver", "0:80"]
+RUN python3 manage.py collectstatic
+RUN python3 manage.py migrate
+
+CMD ["python3", "manage.py", "runserver", "0:80"]
