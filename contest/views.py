@@ -12,7 +12,7 @@ import bs4
 
 def query(request):
     context = {'paid': request.GET.get('paid', False),
-               'contests': Contest.objects.all()}
+               'contests': sorted(list(Contest.objects.all()), key=lambda c: c.order)}
     return render(request, 'contest/query.html', context)
 
 
