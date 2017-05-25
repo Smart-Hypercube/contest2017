@@ -16,10 +16,12 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
-from contest.views import query, webhook
+from contest.views import query, checklist, scoretable, webhook
 
 urlpatterns = [
     url(r'^$', query),
+    url(r'^checklist$', checklist),
+    url(r'^scoretable$', scoretable),
     url(r'^webhook$', webhook),
     url(r'^admin/', admin.site.urls),
 ]

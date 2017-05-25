@@ -16,6 +16,16 @@ def query(request):
     return render(request, 'contest/query.html', context)
 
 
+def checklist(request):
+    context = {'contests': sorted(list(Contest.objects.all()), key=lambda c: c.order)}
+    return render(request, 'contest/checklist.html', context)
+
+
+def scoretable(request):
+    context = {'contests': sorted(list(Contest.objects.all()), key=lambda c: c.order)}
+    return render(request, 'contest/scoretable.html', context)
+
+
 def get_number(s):
     return ''.join(filter(str.isdigit, s))
 

@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static "contest/style.css" %}">
+    <title>打分表 - 中国科大第七届合肥高校国标舞邀请赛</title>
+</head>
+<body>
+    <div id="title-page" class="noscreen noprint">
+        <h1>
+            <img src="{% static "contest/ustcblack.jpg" %}" alt="" class="logo" /><br />
+            <img src="{% static "contest/ustcnameblack.jpg" %}" alt="中国科学技术大学" class="banner" /><br />
+            第七届合肥高校国际标准舞邀请赛<br />
+            打分表
+        </h1>
+    </div>
+    <div id="menu-page" class="noscreen noprint">
+        <h2>目录</h2>
+        <ol>
+            {% for contest in contests %}
+                <li>{{ contest.name }}</li>
+            {% endfor %}
+        </ol>
+    </div>
+    {% for contest in contests %}
+        <div class="page noscreen">
+            <h2>{{ contest.order }} {{ contest.name }}</h2>
+            <table>
+                <tr><th>男</th><th>女</th><th colspan="5">请打名次</th><th>备注</th></tr>
+                {% for participate in contest.participate_set.all %}
+                    <tr>
+                        <td>
+                            {% if participate.contestant1 %}
+                                <span>{{ participate.contestant1.number }}</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if participate.contestant2 %}
+                                <span>{{ participate.contestant2.number }}</span>
+                            {% endif %}
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    {% endfor %}
+    <div class="noprint">
+        本文档仅限打印，请在浏览器中选择“打印”查看。
+    </div>
+</body>
+</html>
