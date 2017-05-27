@@ -35,15 +35,13 @@ def get_number(s):
 
 def subscribe(request, msg):
     context = {'msg': msg,
-               'current': Current.objects.get().contest,
-               'result': False,
-               'reason': 0}
-    return render(request, 'contest/login.xml', context)
+               'current': Current.objects.get().contest}
+    return render(request, 'contest/subscribe.xml', context)
 
 
 def login(request, msg):
     ticket = get_number(msg['content'])
-    if ticket == 0:
+    if ticket == '0':
         context = {'msg': msg,
                    'current': Current.objects.get().contest}
         return render(request, 'contest/base.xml', context)
@@ -78,7 +76,7 @@ def login(request, msg):
 
 def text(request, msg, user):
     content = get_number(msg['content'])
-    if content == 0:
+    if content == '0':
         context = {'msg': msg,
                    'current': Current.objects.get().contest}
         return render(request, 'contest/base.xml', context)
