@@ -13,7 +13,7 @@ class Ticket(models.Model):
     number = models.IntegerField(unique=True)
 
     def __str__(self):
-        return self.number
+        return str(self.number)
 
 
 class User(models.Model):
