@@ -1,0 +1,3 @@
+{% extends "contest/base.xml" %}
+
+{% block content-body %}欢迎关注科大舞协公众号！中国科大第七届合肥高校国际标准舞邀请赛正在火热进行中，投票请先发送您的入场券号码（6位数字）。{% endblock %}

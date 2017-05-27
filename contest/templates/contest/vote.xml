@@ -1,4 +1,3 @@
 {% extends "contest/base.xml" %}
 
-{% block content-body %}{% if result %}投票成功
-发送“0”可以查询当前场次信息。{% else %}{% if reason == 0 %}请先发送入场券上的6位数字。{% elif reason == 1 %}输入错误，请再次核对您的入场券。{% elif reason == 2 %}每张入场券只能使用一次，请重新领取。{% endif %}{% endif %}{% endblock %}
+{% block content-body %}{% if result %}投票成功。{% else %}{% if reason == 0 %}无法理解您的消息，您可以输入4位数选手背号来投票。{% elif reason == 1 %}投票失败，您已经为这场比赛投过票了。{% elif reason == 2 %}投票失败，该选手不在场上。{% endif %}{% endif %}{% endblock %}
