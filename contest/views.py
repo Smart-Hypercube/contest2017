@@ -157,25 +157,31 @@ def admin(request, msg, _):
 @require_http_methods(['HEAD', 'GET', 'POST'])
 def webhook(request):
     if request.method == 'POST':
-        data = bs4.BeautifulSoup(request.body, 'html.parser').xml
-        if data.msgtype.text == 'event':
-            if data.event.text == 'subscribe':
+        try:
+            data = bs4.BeautifulSoup(request.body, 'html.parser').xml
+            if data.msgtype.text == 'event':
+                if data.event.text == 'subscribe':
+                    msg = {'from': data.fromusername.text,
+                           'to': data.tousername.text}
+                    return subscribe(request, msg)
+            elif data.msgtype.text == 'text':
                 msg = {'from': data.fromusername.text,
-                       'to': data.tousername.text}
-                return subscribe(request, msg)
-        elif data.msgtype.text == 'text':
-            msg = {'from': data.fromusername.text,
-                   'to': data.tousername.text,
-                   'time': data.createtime.text,
-                   'content': data.content.text}
-            try:
-                return admin(request, msg, User.objects.get(wechat=msg['from'], group_id=4))
-            except ObjectDoesNotExist:
+                       'to': data.tousername.text,
+                       'time': data.createtime.text,
+                       'content': data.content.text}
                 try:
-                    return text(request, msg, User.objects.get(wechat=msg['from']))
+                    return admin(request, msg, User.objects.get(wechat=msg['from'], group_id=4))
                 except ObjectDoesNotExist:
-                    return login(request, msg)
-        else:
-            return HttpResponse()
+                    try:
+                        return text(request, msg, User.objects.get(wechat=msg['from']))
+                    except ObjectDoesNotExist:
+                        return login(request, msg)
+            else:
+                return HttpResponse()
+        except Exception as e:
+            from traceback import print_exc
+            from sys import stderr
+            print_exc(file=stderr)
+            return HttpResponse(status=500)
     else:
         return HttpResponse(request.GET['echostr'])
