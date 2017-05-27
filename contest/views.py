@@ -3,7 +3,8 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods, require_safe
 
-from django.core.exceptions import ObjectDoesNotExist, ValidationError
+from django.core.exceptions import ObjectDoesNotExist
+from django.db.utils import IntegrityError
 
 from .models import *
 
@@ -66,7 +67,7 @@ def login(request, msg):
                    'result': False,
                    'reason': 1}
         return render(request, 'contest/login.xml', context)
-    except ValidationError:
+    except IntegrityError:
         context = {'msg': msg,
                    'current': Current.objects.get().contest,
                    'result': False,
@@ -99,7 +100,7 @@ def text(request, msg, user):
     if participate:
         vote = None
         try:
-            vote = Vote.objects.get(participate__contest=participate.contest)
+            vote = Vote.objects.get(user=user, participate__contest=participate.contest)
         except ObjectDoesNotExist:
             pass
         if vote:
@@ -124,7 +125,7 @@ def text(request, msg, user):
     if participate:
         vote = None
         try:
-            vote = Vote.objects.get(participate__contest=participate.contest)
+            vote = Vote.objects.get(user=user, participate__contest=participate.contest)
         except ObjectDoesNotExist:
             pass
         if vote:
